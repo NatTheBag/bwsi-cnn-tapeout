@@ -1,4 +1,3 @@
-```python
 # SPDX-FileCopyrightText: © 2024 Tiny Tapeout
 # SPDX-License-Identifier: Apache-2.0
 
@@ -168,4 +167,3 @@ async def test_matcol(dut):
     assert failed == 0, f"{failed} test(s) failed"
 
     dut._log.info("ALL TESTS PASSED")
-```
