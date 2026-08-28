@@ -1,9 +1,11 @@
+```python
 # SPDX-FileCopyrightText: © 2024 Tiny Tapeout
 # SPDX-License-Identifier: Apache-2.0
 
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
+
 
 IMG_H = 6
 IMG_W = 6
@@ -74,8 +76,11 @@ async def wait_for_done(dut):
     dut.uio_in.value = 1 << 7
 
     for _ in range(1000):
-        if int(dut.uio_out.value) & (1 << 2):
+        done = dut.uio_out.value[2]
+
+        if done.is_resolvable and int(done) == 1:
             return
+
         await ClockCycles(dut.clk, 1)
 
     assert False, "DUT never asserted done"
@@ -88,14 +93,14 @@ async def read_result(dut, address):
     await ClockCycles(dut.clk, 1)
 
     low = int(dut.uo_out.value)
-    low_upper = int(dut.uio_out.value) & 0x03
+    low_upper = int(dut.uio_out.value[1:0])
     low_10 = low | (low_upper << 8)
 
     dut.ui_in.value = address | (1 << 4)
     await ClockCycles(dut.clk, 1)
 
     high = int(dut.uo_out.value)
-    high_upper = int(dut.uio_out.value) & 0x03
+    high_upper = int(dut.uio_out.value[1:0])
     high_10 = high | (high_upper << 8)
 
     result = low_10 | (high_10 << 10)
@@ -124,6 +129,11 @@ async def test_matcol(dut):
 
     expected = compute_golden(fmap, kernel)
 
+    dut._log.info("Expected output:")
+
+    for row in expected:
+        dut._log.info(str(row))
+
     await load_fmap(dut, fmap)
     await load_kernel(dut, kernel)
 
@@ -151,4 +161,11 @@ async def test_matcol(dut):
                 )
                 passed += 1
 
+    dut._log.info(
+        f"Results: {passed} passed, {failed} failed"
+    )
+
     assert failed == 0, f"{failed} test(s) failed"
+
+    dut._log.info("ALL TESTS PASSED")
+```
