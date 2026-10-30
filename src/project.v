@@ -17,8 +17,8 @@ module tt_um_im2col_tm (
     localparam NUM_MACS    = 1;
     localparam FMAP_N      = IMG_H*IMG_W;   // 36 feature map words
     localparam KERN_N      = K*K;           //  9 kernel words
-    localparam FMAP_ADDR_W = 6;             // $clog2(IMG_H*IMG_W)
-    localparam OUT_ADDR_W  = 4;             // $clog2(OUT_H*OUT_W)
+    localparam FMAP_ADDR_W = $clog2(IMG_H*IMG_W);
+    localparam OUT_ADDR_W  = $clog2((IMG_H-K+1)*(IMG_W-K+1));
 
     wire mode = uio_in[7];
 
@@ -29,9 +29,10 @@ module tt_um_im2col_tm (
 
     wire                   ld_en   = ~mode & ld_pin & in_range;
     wire                   ld_sel  = is_kern;
-    wire [FMAP_ADDR_W-1:0] ld_addr = is_kern ? (addr - 6'd36) : addr;
+    wire [5:0]             ld_addr_full = is_kern ? (addr - 6'd36) : addr;
+    wire [FMAP_ADDR_W-1:0] ld_addr = ld_addr_full[FMAP_ADDR_W-1:0];
 
-    wire [OUT_ADDR_W-1:0] rd_addr = ui_in[3:0];
+    wire [OUT_ADDR_W-1:0] rd_addr = ui_in[OUT_ADDR_W-1:0];
     wire                  half    = ui_in[4];
     wire                  start   = mode & ui_in[5];
 
