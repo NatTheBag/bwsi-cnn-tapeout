@@ -6,8 +6,8 @@ from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
 
-IMG_H = 6
-IMG_W = 6
+IMG_H = 4
+IMG_W = 4
 K = 3
 DW = 8
 ACC_W = 20

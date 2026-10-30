@@ -9,8 +9,8 @@ module tt_um_im2col_tm (
     input  wire       rst_n
 );
 
-    localparam IMG_H       = 5;
-    localparam IMG_W       = 5;
+    localparam IMG_H       = 4;
+    localparam IMG_W       = 4;
     localparam K           = 3;
     localparam DW          = 8;
     localparam ACC_W       = 20;
