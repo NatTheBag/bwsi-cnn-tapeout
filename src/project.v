@@ -152,12 +152,14 @@ module im2col #(
 
     generate
         for (genvar m = 0; m < NUM_MACS; m++) begin : g_mac
+            wire signed [DW-1:0] b_lane;
+            assign b_lane = col_data[m*DW +: DW];
             mac_unit #(
                 .DW(DW),
                 .ACC_W(ACC_W)
             ) u_mac (
                 .a(kernel_weight),
-                .b($signed(col_data[m*DW +: DW])),
+                .b(b_lane),
                 .valid_in(valid_in),
                 .clear_acc(clear_acc),
                 .rst_n(rst_n),
