@@ -9,12 +9,12 @@ module tt_um_im2col_tm (
     input  wire       rst_n
 );
 
-    localparam IMG_H       = 6;
-    localparam IMG_W       = 6;
+    localparam IMG_H       = 5;
+    localparam IMG_W       = 5;
     localparam K           = 3;
     localparam DW          = 8;
     localparam ACC_W       = 20;
-    localparam NUM_MACS    = 4;
+    localparam NUM_MACS    = 1;
     localparam FMAP_N      = IMG_H*IMG_W;   // 36 feature map words
     localparam KERN_N      = K*K;           //  9 kernel words
     localparam FMAP_ADDR_W = 6;             // $clog2(IMG_H*IMG_W)
