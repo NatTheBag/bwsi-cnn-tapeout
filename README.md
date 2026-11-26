@@ -35,6 +35,9 @@ We decided to create two testbenches in order to facilitate debugging our Verilo
 
 <img width="526" height="384" alt="Passed Testbench" src="https://github.com/user-attachments/assets/4c20b0a9-614f-41b0-954d-9601dcc59b75" />
 
+Rendered chip: ![GDS Viewer](https://gds-viewer.tinytapeout.com/?model=https://natthebag.github.io/bwsi-cnn-tapeout/tinytapeout.oas&pdk=sky130A)
+<img src = "https://camo.githubusercontent.com/3513ab15148f425fb87be0c12334466e32a721c91bcb2c9e3f3a8d3ace6e062e/68747470733a2f2f6e61747468656261672e6769746875622e696f2f627773692d636e6e2d746170656f75742f6764735f72656e6465722e706e67">
+
 Fun Fact! Single-layer CNNs can perform edge detection using Sobel Filters. To fully test our code, we wrote another testbench where we fed in a 16x16 image of a bunny (of course), and received an 14x14 output of the edges. This can be seen below. 
 
 <img width="403" height="311" alt="Bunny Image" src="https://github.com/user-attachments/assets/e4952c9b-d7ed-4a6c-b4ad-a5d4ac9e8442" />
